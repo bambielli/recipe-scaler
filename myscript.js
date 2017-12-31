@@ -1,10 +1,78 @@
+// FRACTION CLASS
+// accepts an improper fraction as a string param ('1/2', '5/2')
+// toString class returns a mixed num rounded to nearest param for display.
+// i.e
+function Fraction(mixedNum) {
+  var parts = mixedNum.split('/');
+  this.num = parseInt(parts[0]);
+  this.denom = parts.length > 1 ? parseInt(parts[1]) : 1;
+  return this;
+}
+
+Fraction.prototype.multiply = function(otherFrac) {
+  this.num *=  otherFrac.num;
+  this.denom *= otherFrac.denom;
+}
+
+Fraction.prototype.toString = function() {
+  var NEAREST_DENOM = 4; // constant
+  var nearestNum = 1;
+  var mixedNum = this.num;
+  // convert to common base
+  nearestNum *= this.denom;
+  mixedNum *= NEAREST_DENOM;
+
+  // find out how many parts are in the improper fraction.
+  var numParts = 0;
+  while (mixedNum >= nearestNum) {
+    numParts += 1;
+    mixedNum -= nearestNum;
+  }
+
+  // if mixedNum is greater than or equal to 1/2 of nearestNum, add one to numParts.
+  // this rounds to the nearest fraction.
+  if (mixedNum >= (nearestNum / 2)) {
+    numParts += 1;
+  }
+  console.log('NUMPARTS IS', numParts);
+
+  // extract whole numbers out of the parts
+  var whole = 0;
+  while (numParts >= NEAREST_DENOM) {
+    whole += 1;
+    numParts -= NEAREST_DENOM;
+  }
+
+  console.log('WHOLE IS', whole);
+
+  if (!frac) {
+    return `${whole}`;
+  }
+
+  // reduce to 1/2 if there are 2 4ths left over.
+  var frac;
+  if (numParts === 2) {
+    frac = '1/2';
+  } else {
+    frac = `${numParts}/${NEAREST_DENOM}`;
+  }
+
+  // if there was a whole number in the improper fraction, return that, else just the frac
+  return whole ? `${whole} ${frac}` : frac;
+}
+
+// var frac1 = new Fraction('1/2');
+// console.log('to string is', frac1.toString());
+var frac2 = new Fraction('10/5');
+console.log('to string is', frac2.toString());
+
 // [2-4, 4-6, 6-8, 8-10, 10-12]
 var scalingFactors = {
-  0: [1, 2, 3, 4, 5],
-  1: [0.5, 1, 1.5, 2, 2.5],
-  2: [0.333, 0.666, 1, 1.333, 1.666],
-  3: [0.25, 0.5, 0.75, 1, 1.25],
-  4: [0.20, 0.40, 0.60, 0.80, 1]
+  0: [new Fraction('1/1'), new Fraction('2/1'), new Fraction('3/1'), new Fraction('4/1'), new Fraction('5/1')],
+  1: [new Fraction('1/2'), new Fraction('2/2'), new Fraction('3/2'), new Fraction('4/2'), new Fraction('5/2')],
+  2: [new Fraction('1/3'), new Fraction('2/3'), new Fraction('3/3'), new Fraction('4/3'), new Fraction('5/3')],
+  3: [new Fraction('1/4'), new Fraction('2/4'), new Fraction('3/4'), new Fraction('4/4'), new Fraction('5/4')],
+  4: [new Fraction('1/5'), new Fraction('2/5'), new Fraction('3/5'), new Fraction('4/5'), new Fraction('5/5')],
 };
 
 var servingArrays = {
@@ -116,6 +184,10 @@ function getDelimeter(amount) {
   return delimeter;
 }
 
+function scaleAndRound(amount, scale) {
+
+}
+
 // accepts an array of DOMnodes that contain amounts of ingredients.
 // scales it by the chosen scaling factor.
 function scaleAmounts(amounts) {
@@ -124,11 +196,7 @@ function scaleAmounts(amounts) {
     var delimeter = getDelimeter(amount.innerHTML);
     var parsedAmount = splitIngredientAmount(amount.innerHTML, delimeter);
     if (delimeter === '/') {
-      // do fraction stuff
-    } else if (delimeter === '-') {
-      // do range stuff
-    } else {
-      // do regular stuff
+      parsedAmount = [(parseInt(parsedAmount[0]) / parseInt(parsedAmount[1])).toString()]
     }
   }
 }
@@ -146,5 +214,6 @@ if (serving) { // not all pages have serving information
   var select = createDropdown(scaledServings);
   serving.replaceChild(select, serving.childNodes[0]); // first argument, node to replace. second is node to be replaced.
   var amounts = document.getElementsByClassName("wprm-recipe-ingredient-amount");
+  // cache the initial amounts. Need to scale from here for the session;
   scaleAmounts(amounts)
 }
