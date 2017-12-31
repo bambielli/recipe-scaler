@@ -10,8 +10,9 @@ function Fraction(mixedNum) {
 }
 
 Fraction.prototype.multiply = function(otherFrac) {
-  this.num *=  otherFrac.num;
-  this.denom *= otherFrac.denom;
+  var num = this.num * otherFrac.num;
+  var denom = this.denom * otherFrac.denom;
+  return new Fraction(`${num}/${denom}`);
 }
 
 Fraction.prototype.toString = function() {
@@ -45,7 +46,7 @@ Fraction.prototype.toString = function() {
 
   console.log('WHOLE IS', whole);
 
-  if (!frac) {
+  if (numParts === 0) {
     return `${whole}`;
   }
 
@@ -56,18 +57,17 @@ Fraction.prototype.toString = function() {
   } else {
     frac = `${numParts}/${NEAREST_DENOM}`;
   }
+  console.log('FRAC IS', frac);
 
   // if there was a whole number in the improper fraction, return that, else just the frac
   return whole ? `${whole} ${frac}` : frac;
 }
 
-// var frac1 = new Fraction('1/2');
-// console.log('to string is', frac1.toString());
 var frac2 = new Fraction('10/5');
 console.log('to string is', frac2.toString());
 
 // [2-4, 4-6, 6-8, 8-10, 10-12]
-var scalingFactors = {
+var SCALING_FACTORS = {
   0: [new Fraction('1/1'), new Fraction('2/1'), new Fraction('3/1'), new Fraction('4/1'), new Fraction('5/1')],
   1: [new Fraction('1/2'), new Fraction('2/2'), new Fraction('3/2'), new Fraction('4/2'), new Fraction('5/2')],
   2: [new Fraction('1/3'), new Fraction('2/3'), new Fraction('3/3'), new Fraction('4/3'), new Fraction('5/3')],
@@ -75,7 +75,7 @@ var scalingFactors = {
   4: [new Fraction('1/5'), new Fraction('2/5'), new Fraction('3/5'), new Fraction('4/5'), new Fraction('5/5')],
 };
 
-var servingArrays = {
+var SERVING_ARRAYS = {
   range: ['2-4', '4-6', '6-8', '8-10', '10-12'],
   noRange: ['2', '4', '6', '8', '10']
 };
@@ -83,8 +83,8 @@ var servingArrays = {
 var SERVES = 'SERVES';
 
 var context = {
-  currentDisplay: '',
-  currentScaling: 1,
+  cachedAmounts: [],
+  servings: [],
 };
 
 // sometimes has the word 'serves' in it
@@ -129,15 +129,15 @@ function getDefaultIndex(defaultServing) {
 
 // takes a serving and creates an array that creates scalings from 2 to 10.
 // input 4-6 -- [{'displayText': '2-4', 'scaling': 1, 'isDefaultServing': false}, ... ]
-function scaleServing(parsedServing) {
+function enumerateServings(parsedServing) {
   var rangeKey = getRangeKey(parsedServing);
   var defaultServing = getDefaultServing(parsedServing);
   var defaultIndex = getDefaultIndex(defaultServing);
-  var servings = servingArrays[rangeKey]
+  var servings = SERVING_ARRAYS[rangeKey]
   console.log('rangeKey is', rangeKey);
   console.log('servings is', servings);
-  console.log('serving arrays', servingArrays);
-  var scaling = scalingFactors[defaultIndex];
+  console.log('serving arrays', SERVING_ARRAYS);
+  var scaling = SCALING_FACTORS[defaultIndex];
 
   var scaledServings = servings.map((item, index) => {
     return {
@@ -150,18 +150,17 @@ function scaleServing(parsedServing) {
   return scaledServings;
 }
 
+// TODO: reevaluate if storing the entire json blob in HTML is necessary.
 function createDropdown(scaledServings) {
   var select = document.createElement('select');
   select.setAttribute('id', 'serving-dropdown');
   for (var i = 0; i < scaledServings.length; i++) {
     var option = document.createElement('option');
-    option.setAttribute('value', JSON.stringify(scaledServings[i]))
+    option.setAttribute('value', i)
     option.innerHTML = scaledServings[i].displayText;
     select.appendChild(option);
     if (scaledServings[i].isDefaultServing) {
-      select.value = JSON.stringify(scaledServings[i]);
-      context.currentScaling = scaledServings[i].scaling;
-      context.currentDisplay = scaledServings[i].displayText;
+      select.value = i;
     }
   }
   return select;
@@ -184,21 +183,41 @@ function getDelimeter(amount) {
   return delimeter;
 }
 
-function scaleAndRound(amount, scale) {
-
+// array of arrays.
+// each item in the array either represents a fraction
+// a whole number.
+// or has two entries which represent the top and bottom portions of the ingredient range.
+function getAmountsFromDomNodes(amounts) {
+  var amountValues = [];
+  for (var i = 0; i < amounts.length; i++) {
+    var amount = amounts[i].innerHTML;
+    if (isRange(amount)) {
+      // this is when it is a range of numbers
+      parts = amount.split('-');
+      amount = [new Fraction(parts[0]), new Fraction(parts[1])];
+    } else {
+      // this is when it is just a single number
+      // or when it is a fraction
+      amount = [new Fraction(amount)];
+    }
+    amountValues.push(amount);
+  }
+  return amountValues;
 }
 
 // accepts an array of DOMnodes that contain amounts of ingredients.
 // scales it by the chosen scaling factor.
-function scaleAmounts(amounts) {
+// returns the scaled version of the cached values for the current scale.
+function scaleAmounts(amounts, scale) {
+  var scaledArrayOfAmounts = [];
   for (var i = 0; i < amounts.length; i++) {
-    var amount = amounts[i];
-    var delimeter = getDelimeter(amount.innerHTML);
-    var parsedAmount = splitIngredientAmount(amount.innerHTML, delimeter);
-    if (delimeter === '/') {
-      parsedAmount = [(parseInt(parsedAmount[0]) / parseInt(parsedAmount[1])).toString()]
-    }
+    var amountArray = amounts[i];
+    amountArray = amountArray.map((item) => {
+      return item.multiply(scale);
+    });
+    scaledArrayOfAmounts.push(amountArray);
   }
+  return scaledArrayOfAmounts;
 }
 
 // execution
@@ -208,12 +227,30 @@ if (serving) { // not all pages have serving information
   console.log('serve is', serve);
 
   var parsedServing = parseServing(serve);
-  var scaledServings = scaleServing(parsedServing);
+  var enumeratedServings = enumerateServings(parsedServing);
+  context.servings = enumeratedServings;
   console.log('parsedServing is', parsedServing);
-  console.log('scaledServing is', scaledServings);
-  var select = createDropdown(scaledServings);
+  console.log('scaledServing is', enumeratedServings);
+  var select = createDropdown(enumeratedServings);
+  select.onchange = function(e) {
+    console.log('change happened');
+    var index = parseInt(e.target.value);
+    var currentScaling = context.servings[index].scaling;
+    console.log('current scaling', currentScaling);
+    var afterScaling = scaleAmounts(context.cachedAmounts, currentScaling);
+    console.log('afterBeingScaled, amounts are', afterScaling);
+    var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
+    console.log(afterScaling.length, 'should equal', amountsFromDom.length);
+    for(var i = 0; i < amountsFromDom.length; i++) {
+      var domNode = amountsFromDom[i];
+      var amount = afterScaling[i].length === 1 ? afterScaling[i][0].toString() : `${afterScaling[i][0].toString()}-${afterScaling[i][1].toString()}`;
+      domNode.innerHTML = amount;
+    }
+  };
   serving.replaceChild(select, serving.childNodes[0]); // first argument, node to replace. second is node to be replaced.
-  var amounts = document.getElementsByClassName("wprm-recipe-ingredient-amount");
-  // cache the initial amounts. Need to scale from here for the session;
-  scaleAmounts(amounts)
+  var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
+  context.cachedAmounts = getAmountsFromDomNodes(amountsFromDom);
+  console.log('cached amounts is', context.cachedAmounts);
+} else {
+  console.log('no serving was detected');
 }
