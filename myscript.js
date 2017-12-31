@@ -35,7 +35,6 @@ Fraction.prototype.toString = function() {
   if (mixedNum >= (nearestNum / 2)) {
     numParts += 1;
   }
-  console.log('NUMPARTS IS', numParts);
 
   // extract whole numbers out of the parts
   var whole = 0;
@@ -43,8 +42,6 @@ Fraction.prototype.toString = function() {
     whole += 1;
     numParts -= NEAREST_DENOM;
   }
-
-  console.log('WHOLE IS', whole);
 
   if (numParts === 0) {
     return `${whole}`;
@@ -57,14 +54,10 @@ Fraction.prototype.toString = function() {
   } else {
     frac = `${numParts}/${NEAREST_DENOM}`;
   }
-  console.log('FRAC IS', frac);
 
   // if there was a whole number in the improper fraction, return that, else just the frac
   return whole ? `${whole} ${frac}` : frac;
 }
-
-var frac2 = new Fraction('10/5');
-console.log('to string is', frac2.toString());
 
 // [2-4, 4-6, 6-8, 8-10, 10-12]
 var SCALING_FACTORS = {
@@ -82,7 +75,7 @@ var SERVING_ARRAYS = {
 
 var SERVES = 'SERVES';
 
-var context = {
+var cache = {
   cachedAmounts: [],
   servings: [],
 };
@@ -101,10 +94,6 @@ function parseServing(serveText) {
 
 function isRange(parsedServing) {
   return parsedServing.indexOf('-') > -1;
-}
-
-function isFraction(parsedServing) {
-  return parsedServing.indexOf('/') > -1;
 }
 
 // function for whether or not the serving is a ranged serving or not.
@@ -134,11 +123,7 @@ function enumerateServings(parsedServing) {
   var defaultServing = getDefaultServing(parsedServing);
   var defaultIndex = getDefaultIndex(defaultServing);
   var servings = SERVING_ARRAYS[rangeKey]
-  console.log('rangeKey is', rangeKey);
-  console.log('servings is', servings);
-  console.log('serving arrays', SERVING_ARRAYS);
   var scaling = SCALING_FACTORS[defaultIndex];
-
   var scaledServings = servings.map((item, index) => {
     return {
       isDefaultServing: index === defaultIndex,
@@ -164,23 +149,6 @@ function createDropdown(scaledServings) {
     }
   }
   return select;
-}
-
-// accepts either 1 or 1-2 or 1/2
-// 1 returns parsed 1. 1-2 returns array of 1, 2 and 1-2 returns arry of 1,2
-function splitIngredientAmount(amount, delimeter) {
-  var returnArray = amount.split(delimeter);
-  return returnArray.map(parseInt);
-}
-
-function getDelimeter(amount) {
-  var delimeter;
-  if (isRange(amount)) {
-    delimeter = '-';
-  } else if (isFraction(amount)) {
-    delimeter = '/';
-  }
-  return delimeter;
 }
 
 // array of arrays.
@@ -220,37 +188,39 @@ function scaleAmounts(amounts, scale) {
   return scaledArrayOfAmounts;
 }
 
+// used when serving changes to update the dom.
+function onServingChange(e) {
+  var index = parseInt(e.target.value);
+  var currentScaling = cache.servings[index].scaling;
+  var afterScaling = scaleAmounts(cache.cachedAmounts, currentScaling);
+  var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
+  console.log(afterScaling.length, 'should equal', amountsFromDom.length);
+  for(var i = 0; i < amountsFromDom.length; i++) {
+    var domNode = amountsFromDom[i];
+    var amount = afterScaling[i].length === 1 ? afterScaling[i][0].toString() : `${afterScaling[i][0].toString()}-${afterScaling[i][1].toString()}`;
+    domNode.innerHTML = amount;
+  }
+}
+
 // execution
 var serving = document.getElementsByClassName("wprm-recipe-details-unit wprm-recipe-servings-unit")[0];
 if (serving) { // not all pages have serving information
   var serve = serving.innerHTML;
-  console.log('serve is', serve);
 
+  // parse serving out of dom and construct the appropriate array of options.
   var parsedServing = parseServing(serve);
   var enumeratedServings = enumerateServings(parsedServing);
-  context.servings = enumeratedServings;
-  console.log('parsedServing is', parsedServing);
-  console.log('scaledServing is', enumeratedServings);
+  cache.servings = enumeratedServings;
+
+  // create the dropdown from the serving options. attachn onchange handler.
   var select = createDropdown(enumeratedServings);
-  select.onchange = function(e) {
-    console.log('change happened');
-    var index = parseInt(e.target.value);
-    var currentScaling = context.servings[index].scaling;
-    console.log('current scaling', currentScaling);
-    var afterScaling = scaleAmounts(context.cachedAmounts, currentScaling);
-    console.log('afterBeingScaled, amounts are', afterScaling);
-    var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
-    console.log(afterScaling.length, 'should equal', amountsFromDom.length);
-    for(var i = 0; i < amountsFromDom.length; i++) {
-      var domNode = amountsFromDom[i];
-      var amount = afterScaling[i].length === 1 ? afterScaling[i][0].toString() : `${afterScaling[i][0].toString()}-${afterScaling[i][1].toString()}`;
-      domNode.innerHTML = amount;
-    }
-  };
+  select.onchange = onServingChange;
   serving.replaceChild(select, serving.childNodes[0]); // first argument, node to replace. second is node to be replaced.
+
+  // scrape ingredients from dom, cache for reference later.
   var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
-  context.cachedAmounts = getAmountsFromDomNodes(amountsFromDom);
-  console.log('cached amounts is', context.cachedAmounts);
+  cache.cachedAmounts = getAmountsFromDomNodes(amountsFromDom);
+
 } else {
   console.log('no serving was detected');
 }
