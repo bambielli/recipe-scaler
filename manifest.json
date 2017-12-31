@@ -6,7 +6,7 @@
   "version": "0.0.2",
   "content_scripts": [
   {
-    "matches": ["https://www.halfbakedharvest.com/*"],
+    "matches": ["https://www.halfbakedharvest.com/*", "file:///*"],
     "js": ["myscript.js"]
   }
 ]
