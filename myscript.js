@@ -194,7 +194,6 @@ function onServingChange(e) {
   var currentScaling = cache.servings[index].scaling;
   var afterScaling = scaleAmounts(cache.cachedAmounts, currentScaling);
   var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
-  console.log(afterScaling.length, 'should equal', amountsFromDom.length);
   for(var i = 0; i < amountsFromDom.length; i++) {
     var domNode = amountsFromDom[i];
     var amount = afterScaling[i].length === 1 ? afterScaling[i][0].toString() : `${afterScaling[i][0].toString()}-${afterScaling[i][1].toString()}`;
