@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,
 
-  "name": "Getting started example",
-  "description": "Balls",
+  "name": "recipe-scaler",
+  "description": "scales recipes on halfbakedharvest.com",
   "version": "0.0.2",
   "content_scripts": [
   {
-    "matches": ["https://www.halfbakedharvest.com/*", "file:///*"],
+    "matches": ["https://www.halfbakedharvest.com/*"],
     "js": ["myscript.js"]
   }
 ]

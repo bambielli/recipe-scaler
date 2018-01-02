@@ -1,0 +1,482 @@
+/* 
+	Theme Name: Harvest Recipe Print
+	Theme URI: 
+	Description: Customized theme for Recipe Maker
+	Version: 1.1
+*/
+.wprm-recipe-custom {
+  margin: 30px auto;
+}
+.wprm-recipe-custom li,
+.wprm-recipe-custom p {
+  font-size: 1.6rem;
+}
+.wprm-recipe-custom:after,
+.wprm-recipe-custom:before {
+  display: none;
+}
+.wprm-recipe-custom .wprm-recipe-image-container {
+  float: left;
+  max-width: 48%;
+  text-align: center;
+  margin: 0 40px 10px 0;
+}
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-image {
+  margin: 0 auto 20px;
+}
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-image img {
+  max-width: 340px;
+  height: auto;
+  margin: 0;
+}
+.wprm-recipe-custom .wprm-recipe-buttons {
+  margin-bottom: 1rem;
+}
+.wprm-recipe-custom .wprm-recipe-buttons .nc_socialPanel,
+.wprm-recipe-custom .wprm-recipe-buttons .nc_socialPanel .iconFiller,
+.wprm-recipe-custom
+  .wprm-recipe-buttons
+  .nc_socialPanel
+  .nc_tweetContainer
+  a.nc_tweet,
+.wprm-recipe-custom .wprm-recipe-buttons .nc_socialPanel .sw,
+.wprm-recipe-custom .wprm-recipe-buttons div.nc_socialPanel .nc_tweetContainer,
+.wprm-recipe-custom .wprm-recipe-buttons span.swp_share {
+  height: 50px;
+  line-height: 50px;
+}
+.wprm-recipe-custom .wprm-recipe-buttons span.swp_share,
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-print {
+  font: 700 1.6rem/5rem 'Proxima Nova', sans-serif !important;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-print {
+  display: block;
+  color: #c6afa5;
+  background: #fff;
+  border: 1px solid #c6afa5;
+  cursor: pointer;
+}
+.wprm-recipe-custom .wprm-recipe-buttons .nc_socialPanel .iconFiller {
+  width: auto !important;
+}
+.wprm-recipe-custom .wprm-recipe-buttons span.spaceManWilly {
+  display: inline;
+}
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-print:active,
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-print:focus,
+.wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-print:hover {
+  background: #c6afa5;
+  color: #fff;
+}
+.wprm-recipe-custom .wprm-recipe-buttons span.boBtn {
+  display: none !important;
+  visibility: hidden !important;
+}
+.wprm-recipe-custom .wprm-recipe-data {
+  width: 45%;
+  margin: 0 0 30px auto;
+}
+.wprm-recipe-custom .wprm-recipe-name-before {
+  display: table;
+  content: 'The Recipe';
+  font: 700 1.8rem/1.8rem 'Proxima Nova', sans-serif;
+  color: #c6afa5;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  padding: 3rem 0 0 88px;
+  background: url(../../../images/arrow-next.png) -48px 3.4rem no-repeat;
+  background-size: 126px;
+  position: relative;
+  left: -88px;
+}
+.wprm-recipe-custom h2.wprm-recipe-name {
+  background: 0 0;
+  font: 400 2rem Bentham, serif;
+  color: #000;
+  text-transform: lowercase;
+  margin: 0 0 2rem auto;
+}
+.wprm-recipe-custom h2.wprm-recipe-name span {
+  padding: 0;
+  background: 0 0;
+  margin: 0;
+}
+.wprm-recipe-custom h3.wprm-recipe-author {
+  font-size: 2rem;
+  line-height: 1rem;
+}
+.wprm-recipe-custom h3.wprm-recipe-header,
+.wprm-recipe-custom h4.wprm-recipe-group-name {
+  margin: 0 !important;
+  font: 700 1.8rem/3rem 'Proxima Nova', sans-serif;
+  color: #c6afa5;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  background: 0 0;
+}
+.wprm-recipe-custom h4.wprm-recipe-group-name span {
+  padding: 0;
+  background: 0 0;
+}
+.wprm-recipe-custom .wprm-recipe-taxonomy {
+  margin-bottom: 20px;
+}
+.wprm-recipe-custom .wprm-recipe-taxonomy h6 em {
+  font-weight: 400;
+  font-size: 1.6rem;
+  font-family: Bentham, serif;
+  color: #797771;
+  text-transform: lowercase;
+  letter-spacing: normal;
+}
+.wprm-recipe-custom .wprm-recipe-summary,
+.wprm-recipe-custom .wprm-recipe-summary p {
+  font-family: Bentham, serif;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  /* color: #797771; */
+  letter-spacing: 0.02rem;
+  margin-bottom: 1.5rem;
+}
+.wprm-recipe-custom .wprm-recipe-rating {
+  margin-bottom: 2rem;
+}
+.wprm-recipe-custom .wprm-recipe-rating-details {
+  font: 400 1.6rem/3rem Bentham, serif;
+  font-style: italic;
+  color: #797771;
+  text-transform: lowercase;
+}
+.wprm-recipe-custom .wprm-rating-star svg {
+  vertical-align: middle;
+  width: 26px;
+  height: 26px;
+  margin: 0 0.5rem 0 0;
+}
+.wprm-recipe-custom svg polygon {
+  stroke-width: 1;
+  stroke: #c6afa5;
+}
+.wprm-recipe-custom .wprm-rating-star-full svg polygon,
+.wprm-recipe-custom svg path,
+.wprm-recipe-custom svg rect {
+  fill: #c6afa5;
+}
+.wprm-recipe-custom .wprm-recipe-details-container {
+  margin-bottom: 20px;
+  font: 400 1.6rem/3rem Bentham, serif !important;
+  /* color: #797771; */
+  text-transform: lowercase;
+}
+.wprm-recipe-custom .wprm-recipe-details-icon svg {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+}
+.wprm-recipe-custom .wprm-recipe-details-container > div {
+  border-bottom: 1px solid #dddddc;
+}
+.wprm-recipe-custom .wprm-recipe-details-container > div > span {
+  display: inline-block;
+  padding: 10px;
+  vertical-align: middle;
+}
+.wprm-recipe-custom .wprm-recipe-details-container .wprm-recipe-servings-link {
+  display: inline-block;
+  margin-right: 10px;
+}
+.wprm-recipe-custom
+  .wprm-recipe-details-container
+  > div
+  > span.wprm-recipe-details-unit {
+  padding: 10px 0;
+}
+.wprm-recipe-custom
+  .wprm-recipe-details-container
+  > div
+  > span.wprm-recipe-details-icon {
+  padding: 0;
+}
+.wprm-recipe-custom
+  .wprm-recipe-details-container
+  span.wprm-recipe-details-name {
+  border-right: 1px solid #dddddc;
+  min-width: 100px;
+}
+.wprm-recipe-custom .wprm-recipe-ingredients-container {
+  clear: left;
+  margin: 0 auto 40px;
+}
+.wprm-recipe-custom ol,
+.wprm-recipe-custom ul {
+  margin-bottom: 30px;
+  padding: 0;
+}
+.wprm-recipe-custom li.wprm-recipe-ingredient {
+  margin-bottom: 0;
+}
+.wprm-recipe-custom .wprm-recipe-instructions,
+.wprm-recipe-custom .wprm-recipe-instructions li {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+.wprm-recipe-custom .wprm-recipe-ingredient-notes {
+  opacity: 0.8;
+}
+.wprm-recipe-custom .wprm-recipe-instructions-container {
+  margin-bottom: 40px;
+}
+.wprm-recipe-custom .wprm-recipe-instruction-text p:last-of-type {
+  margin-bottom: 0;
+}
+html body .wprm-recipe-container .wprm-recipe-custom .wprm-nutrition-label {
+  display: block;
+  width: 60%;
+  max-width: 60%;
+  border: 0;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Proxima Nova', sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  color: inherit;
+}
+html
+  body
+  .wprm-recipe-container
+  .wprm-recipe-custom
+  .wprm-nutrition-label
+  strong {
+  font-weight: 400 !important;
+  color: #000;
+}
+html
+  body
+  .wprm-recipe-container
+  .wprm-recipe-custom
+  .wprm-nutrition-label
+  > div {
+  padding: 2px 5px;
+}
+html body .wprm-recipe-container .wprm-recipe-custom .nutrition-title {
+  font: 700 1.8rem/3rem 'Proxima Nova', sans-serif;
+  color: #c6afa5;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  background: 0 0;
+}
+html body .wprm-recipe-container .wprm-recipe-custom .nutrition-line,
+html body .wprm-recipe-container .wprm-recipe-custom .nutrition-recipe {
+  display: none;
+  visibility: hidden;
+}
+html body .wprm-recipe-container .wprm-recipe-custom .nutrition-serving {
+  font-size: 14px;
+  line-height: inherit;
+  font-weight: 400;
+}
+html
+  body
+  .wprm-recipe-container
+  .wprm-recipe-custom
+  .wprm-nutrition-label
+  .nutrition-item,
+html
+  body
+  .wprm-recipe-container
+  .wprm-recipe-custom
+  .wprm-nutrition-label
+  .nutrition-sub-item {
+  border-top: 1px solid #dddddc;
+}
+html
+  body
+  .wprm-recipe-container
+  .wprm-recipe-custom
+  .wprm-nutrition-label
+  .nutrition-sub-item {
+  margin-left: 10px;
+  padding-left: 10px;
+}
+html
+  body
+  .wprm-recipe-container
+  .wprm-recipe-custom
+  .wprm-nutrition-label
+  .nutrition-warning {
+  border-top: 1px solid #dddddc;
+  font-size: 14px;
+}
+html body .tooltipster-sidetip .tooltipster-box {
+  background: #fff;
+  border: 1px solid #dddddc;
+  border-radius: 0;
+}
+html
+  body
+  .tooltipster-sidetip.tooltipster-bottom
+  .tooltipster-arrow-background {
+  border-bottom-color: #fff;
+  top: 1px;
+}
+html body .tooltipster-sidetip.tooltipster-left .tooltipster-arrow-background {
+  border-left-color: #fff;
+  left: -1px;
+}
+html body .tooltipster-sidetip.tooltipster-right .tooltipster-arrow-background {
+  border-right-color: #fff;
+  left: 1px;
+}
+html body .tooltipster-sidetip.tooltipster-top .tooltipster-arrow-background {
+  border-top-color: #fff;
+  top: -1px;
+}
+html body .tooltipster-sidetip.tooltipster-bottom .tooltipster-arrow-border {
+  border-bottom-color: #dddddc;
+}
+html body .tooltipster-sidetip.tooltipster-left .tooltipster-arrow-border {
+  border-left-color: #dddddc;
+}
+html body .tooltipster-sidetip.tooltipster-right .tooltipster-arrow-border {
+  border-right-color: #dddddc;
+}
+html body .tooltipster-sidetip.tooltipster-top .tooltipster-arrow-border {
+  border-top-color: #dddddc;
+}
+input[type='range'].wprm-recipe-servings-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 5px 0;
+}
+input[type='range'].wprm-recipe-servings-slider:focus {
+  outline: 0;
+}
+input[type='range'].wprm-recipe-servings-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+  background: #c6afa5;
+  border-radius: 0;
+  border: 0 solid #010101;
+}
+input[type='range'].wprm-recipe-servings-slider::-webkit-slider-thumb {
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+  border: 1px solid #000;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px;
+}
+input[type='range'].wprm-recipe-servings-slider:focus::-webkit-slider-runnable-track {
+  background: #c6afa5;
+}
+input[type='range'].wprm-recipe-servings-slider::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+  background: #c6afa5;
+  border-radius: 0;
+  border: 0 solid #010101;
+}
+input[type='range'].wprm-recipe-servings-slider::-moz-range-thumb {
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+  border: 1px solid #000;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+}
+input[type='range'].wprm-recipe-servings-slider::-ms-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: 0 0;
+  border-color: transparent;
+  color: transparent;
+}
+input[type='range'].wprm-recipe-servings-slider::-ms-fill-lower {
+  background: #c6afa5;
+  border: 0 solid #010101;
+  border-radius: 0;
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+}
+input[type='range'].wprm-recipe-servings-slider::-ms-fill-upper {
+  background: #c6afa5;
+  border: 0 solid #010101;
+  border-radius: 0;
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+}
+input[type='range'].wprm-recipe-servings-slider::-ms-thumb {
+  box-shadow: 0 0 0 transparent, 0 0 0 rgba(13, 13, 13, 0);
+  border: 1px solid #000;
+  width: 20px;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  height: 10px;
+}
+input[type='range'].wprm-recipe-servings-slider:focus::-ms-fill-lower {
+  background: #c6afa5;
+}
+input[type='range'].wprm-recipe-servings-slider:focus::-ms-fill-upper {
+  background: #c6afa5;
+}
+@media only screen and (max-width: 1024px) {
+  .wprm-recipe-custom {
+    margin: 30px auto 20px;
+  }
+  .wprm-recipe-custom .wprm-recipe-image-container .wprm-recipe-image img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+@media only screen and (max-width: 736px) {
+  .wprm-recipe-custom .wprm-recipe-image-container {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 0 0;
+  }
+  .wprm-recipe-custom .wprm-recipe-buttons {
+    /* display: none;
+  visibility: hidden; */
+  }
+  .wprm-recipe-custom .wprm-recipe-data {
+    width: 100%;
+    padding: 0;
+  }
+  .wprm-recipe-custom .wprm-recipe-name-before {
+    left: 0;
+  }
+  .wprm-recipe-custom h2.wprm-recipe-name {
+    margin-left: 0;
+    text-align: left !important;
+  }
+  .wprm-recipe-custom .wprm-recipe-details-container {
+    width: 50%;
+    margin: 0 auto 20px 0;
+  }
+  .wprm-recipe-custom .wprm-recipe-ingredients-container {
+    margin-bottom: 40px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .wprm-recipe-custom .wprm-recipe-details-container {
+    width: 100%;
+  }
+  html body .wprm-recipe-container .wprm-recipe-custom .wprm-nutrition-label {
+    width: 100%;
+    max-width: 100%;
+  }
+}
