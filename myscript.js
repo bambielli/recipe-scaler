@@ -43,8 +43,11 @@ Fraction.prototype.toString = function() {
     numParts -= NEAREST_DENOM;
   }
 
-  if (numParts === 0) {
+  if (numParts === 0 && whole > 0) {
     return `${whole}`;
+  } else if (numParts === 0 && whole === 0) {
+    // if the amount is so small that it won't work, just include it as a 1/4
+    return `1/4`; // smallest fraction
   }
 
   // reduce to 1/2 if there are 2 4ths left over.
