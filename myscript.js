@@ -216,7 +216,8 @@ if (serving) { // not all pages have serving information
   var select = createDropdown(enumeratedServings);
   serving.replaceChild(select, serving.childNodes[0]); // first argument, node to replace. second is node to be replaced.
   var descriptionText = document.createElement('div');
-  descriptionText.innerHTML = 'Scale your recipe with the dropdown'
+  descriptionText.innerHTML = 'Scale your recipe with the dropdown';
+  descriptionText.setAttribute('style', 'font-weight: bold;');
   serving.appendChild(descriptionText);
 
   // scrape ingredients from dom, cache for reference later.
