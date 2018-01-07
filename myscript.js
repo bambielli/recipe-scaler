@@ -219,10 +219,6 @@ if (serving) { // not all pages have serving information
   // scrape ingredients from dom, cache for reference later.
   var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
   cache.cachedAmounts = getAmountsFromDomNodes(amountsFromDom);
-  console.log('javascript executed');
-  window.addEventListener('load', function(){
-    document.getElementById('the-recipe').scrollIntoView(true);
-  });
 } else {
   console.log('no serving was detected');
 }
