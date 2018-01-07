@@ -1,4 +1,4 @@
-## [Recipe-Scaler](bambielli.com/recipe-scaler/)
+## [Recipe-Scaler](http://www.bambielli.com/recipe-scaler/)
 
 Chrome extension that scales recipe ingredient proportions based on chosen serving size.
 
@@ -8,11 +8,11 @@ Works on [halfbakedharvest.com](https://www.halfbakedharvest.com).
 
 ## Installation
 
-1. Download the code in this repo.
+1. Download the code in this repository.
 2. Open chrome, navigate to [chrome://extensions](chrome://extensions).
-3. Drag the folder to the browser window, it should install automatically.
+3. Once you are on the chrome://extensions page, drag the downloaded code folder into the browser window. it should install automatically.
 
-Now navigate to any recipe on HalfBakedHarvest.com. If the recipe contains servings, you'll see a dropdown like the screenshot above where you can modify the serving amount to fit your entertaining needs.
+Now navigate to any recipe on HalfBakedHarvest.com. If the recipe contains a servings box, you'll see a dropdown like the screenshot above where you can modify the serving amount to fit your entertaining needs.
 
 ## Motivation
 
@@ -31,6 +31,10 @@ The ingredient values are scaled differently based on the servings for which the
 For example, if the recipe was originally intended for 4, scaling to 2 people is a factor of 0.5. Scaling to 6 people is a factor of 1.5, to 8 people is a factor of 2, and to 10 people is a factor of 2.5.
 
 Ingredient scaling rounds to the nearest 1/4, and represents fractions as mixed numbers instead of decimals.
+
+On HBH recipes, the numerical amounts of ingredients are segregated into their own span, away from the text description of the ingredient. 
+This makes scraping / scaling the amounts much simpler.
+If there are ingredient amounts in the ingredient list that are not separated into their own span, I do not scale them. 
 
 ## Interest in Incorporating This on your Site?
 
