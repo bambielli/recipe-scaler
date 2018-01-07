@@ -1,4 +1,4 @@
-## Recipe-Scaler
+## [Recipe-Scaler](bambielli.com/recipe-scaler/)
 
 Chrome extension that scales recipe ingredient proportions based on chosen serving size.
 
@@ -30,4 +30,8 @@ The ingredient values are scaled differently based on the servings for which the
 
 For example, if the recipe was originally intended for 4, scaling to 2 people is a factor of 0.5. Scaling to 6 people is a factor of 1.5, to 8 people is a factor of 2, and to 10 people is a factor of 2.5.
 
-Ingredient scaling rounds to the nearest 1/4.
+Ingredient scaling rounds to the nearest 1/4, and represents fractions as mixed numbers instead of decimals.
+
+## Interest in Incorporating This on your Site?
+
+Feel free to reach out to me at `brian.ambielli@gmail.com`.
