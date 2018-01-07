@@ -215,11 +215,13 @@ if (serving) { // not all pages have serving information
   // create the dropdown from the serving options. attachn onchange handler.
   var select = createDropdown(enumeratedServings);
   serving.replaceChild(select, serving.childNodes[0]); // first argument, node to replace. second is node to be replaced.
+  var descriptionText = document.createElement('div');
+  descriptionText.innerHTML = 'Scale your recipe with the dropdown'
+  serving.appendChild(descriptionText);
 
   // scrape ingredients from dom, cache for reference later.
   var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
   cache.cachedAmounts = getAmountsFromDomNodes(amountsFromDom);
-  console.log('new version deployed');
 } else {
   console.log('no serving was detected');
 }
