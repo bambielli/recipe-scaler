@@ -56,7 +56,7 @@ Fraction.prototype.toString = function() {
   }
 
   // if there was a whole number in the improper fraction, return that, else just the frac
-  return whole ? `${whole} ${frac}` : frac;
+  return whole ? whole + " " + frac : frac;
 }
 
 // [2-4, 4-6, 6-8, 8-10, 10-12]
@@ -148,6 +148,7 @@ function createDropdown(scaledServings) {
       select.value = i;
     }
   }
+  select.onchange = onServingChange;
   return select;
 }
 
@@ -213,12 +214,12 @@ if (serving) { // not all pages have serving information
 
   // create the dropdown from the serving options. attachn onchange handler.
   var select = createDropdown(enumeratedServings);
-  select.onchange = onServingChange;
   serving.replaceChild(select, serving.childNodes[0]); // first argument, node to replace. second is node to be replaced.
 
   // scrape ingredients from dom, cache for reference later.
   var amountsFromDom = document.getElementsByClassName("wprm-recipe-ingredient-amount");
   cache.cachedAmounts = getAmountsFromDomNodes(amountsFromDom);
+  console.log('new version deployed');
 } else {
   console.log('no serving was detected');
 }
